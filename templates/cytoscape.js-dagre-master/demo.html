@@ -1,0 +1,118 @@
+<!DOCTYPE>
+
+<html>
+
+  <head>
+    <title>cytoscape-dagre.js demo</title>
+
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+    <!-- for testing with local version of cytoscape.js -->
+    <!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+    <script src="https://unpkg.com/dagre@0.7.4/dist/dagre.js"></script>
+    <script src="cytoscape-dagre.js"></script>
+
+    <style>
+      body {
+        font-family: helvetica;
+        font-size: 14px;
+      }
+
+      #cy {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 999;
+      }
+
+      h1 {
+        opacity: 0.5;
+        font-size: 1em;
+      }
+    </style>
+
+    <script>
+
+      window.addEventListener('DOMContentLoaded', function(){
+
+        var cy = window.cy = cytoscape({
+          container: document.getElementById('cy'),
+
+          boxSelectionEnabled: false,
+          autounselectify: true,
+
+          layout: {
+            name: 'dagre'
+          },
+
+          style: [
+            {
+              selector: 'node',
+              style: {
+                'label': "data(name)",
+                'shape': "rectangle",
+                'height': "60px",
+                'width': "100px",
+                'text-valign': "center",
+                'text-halign': "center",
+                'font-size': 8,
+                'background-color': "#AEE2E3"
+              }
+            },
+
+            {
+              selector: 'edge',
+              style: {
+                'label': 'data(weight)',
+                'width': 3,
+                'font-size': 8,
+                'background-color': '#000000',
+                'text-background-shape': 'rectangle',
+                'text-background-color': 'white',
+                'text-background-padding': 10,
+                'target-arrow-shape': 'triangle',
+                'line-color': '#C8C8C8',
+                'target-arrow-color': '#C8C8C8',
+                'curve-style': 'bezier'
+              }
+            }
+          ],
+
+          elements: {
+            nodes: [
+              { 'data': { 'id': 40, 'name': "getLastKnownLocation"} },
+              { 'data': { 'id': 34, 'name': "register"} },
+              { 'data': { 'id': 38, 'name': "schedule"} },
+              { 'data': { 'id': 32, 'name': "foggy"} },
+              { 'data': { 'id': 30, 'name': "register"} },
+              { 'data': { 'id': 25, 'name': "clinit"} }
+            ],
+            edges: [
+              { 'data': { 'source': 40, 'target': 34, 'weight': "foo@1234" } },
+              { 'data': { 'source': 40, 'target': 38, 'weight': "foo@1234" } },
+              { 'data': { 'source': 34, 'target': 30, 'weight': "bar@23" } },
+              { 'data': { 'source': 38, 'target': 32, 'weight': "wonder@789" } },
+              { 'data': { 'source': 32, 'target': 25, 'weight': "star@999" } }
+            ]
+          }
+        });
+
+      });
+
+
+    </script>
+  </head>
+
+  <body>
+    <h1>cytoscape-dagre demo</h1>
+    <h2>"Print HI Print HO"</h2>
+    <div id="cy"></div>
+
+  </body>
+
+</html>

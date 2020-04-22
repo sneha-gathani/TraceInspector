@@ -1,0 +1,963 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+    <title>Visualisation</title>
+
+    <!-- Essential javascript file that precomputes the positions of the rectangles -->
+    <script type="text/javascript" src="static/js/pre.js"></script>
+
+    <!-- Essential css that I have written -->
+    <link rel="stylesheet" type="text/css" href="static/css/stylecss.css"></link>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css"></link>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.js"> </script>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,900,700,700italic,400italic,300italic,300,100italic,100,900italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Dosis:400,500,700,800,600,300,200' rel='stylesheet' type='text/css'>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="static/img/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Bootstrap core CSS     -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="static/css/animate.min.css" rel="stylesheet"/>
+
+    <!--  Light Bootstrap Table core CSS    -->
+    <link href="static/css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet"/>
+
+    <!-- Essential CodeMirror scripts that help with veiwing the source code in an appropriate manner -->
+    <link rel="stylesheet" href="http://codemirror.net/lib/codemirror.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.47.0/codemirror.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.47.0/addon/edit/matchbrackets.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.47.0/addon/comment/continuecomment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.47.0/mode/javascript/javascript.js"></script>
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <!-- <link href="static/css/pe-icon-7-stroke.css" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- <script type="text/javascript" src="static/js/jquery.3.2.1.min.js"></script> -->
+    <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap-notify.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap-select.js"></script>
+    <!-- <script type="text/javascript" src="static/js/light-bootstrap-dashboard.js"></script>     -->
+    <script type="text/javascript" src="static/js/demo.js"></script>
+    <script type="text/javascript" src="static/js/chartist.min.js"></script>
+
+    <!-- buckets.js is the external javascript file which gives the flexibility to work with data structures like stack in our case -->
+    <script type="text/javascript" src="static/dist/buckets.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.min.js"></script>
+
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+
+    <!-- Flowchart - Cytoscape -->
+    <!-- Klay -->
+    <script src="/static/cytoscape.js/documentation/js/cytoscape.min.js"></script>
+    <script src="https://unpkg.com/klayjs@0.4.1/klay.js"></script>
+    <script src="/static/cytoscape.js-klay-master/cytoscape-klay.js"></script>
+
+    <!-- Colors for timeline -->
+    <script src="//d3js.org/d3-scale-chromatic.v0.3.min.js"></script>
+
+    <style>
+        .split {
+            height:85%;
+        }
+        #split #left {
+            height: 80%
+        }
+
+        #timelinechart #container{
+            height: 50%;
+        }
+
+        #top{
+            height: 50%;
+            position: relative;
+        }
+
+        #bottom{
+            /*padding-top: 10px;*/
+
+            height: 50%;
+            width: 100%;
+        }
+        #cy {
+            border: solid;
+            border-width: 2px;
+            border-color: #C2C5CC;
+            height: 46%;
+            width: 100%;
+            position: relative;
+          }
+
+        .CodeMirror {
+          height: 100px;
+        }
+        svg {
+            float: left;
+            border-bottom: solid 1px #ccc;
+            border-right: solid 1px #ccc;
+            margin-right: -1px;
+            margin-bottom: -1px;
+            height: auto;
+        }
+
+      table, th, td {
+            border: 0.5px solid black;
+            text-decoration-color: black;
+            color: black;
+            padding: 0px;
+        }
+
+      ul li {
+                display: inline-block;
+                position: relative; 
+                text-align: center;
+                padding: 0px 10px;
+            }
+
+        #result {
+            resize: 100vh;
+        }
+
+        #chart {
+            height: 45vh;
+            width: 100%;
+            border:2px transparent;
+            overflow: auto;
+            position: absolute;
+        }
+
+        .dropdown{
+            min-height:90px; 
+            overflow-y :auto; 
+            overflow-x:hidden; 
+            position:absolute;
+            width:300px;
+        }
+
+        .vl {
+            border-left: 2px solid black;
+            height: 50px;
+        }
+
+        .selected {
+            stroke: black;
+            stroke-width: 3;
+        }
+
+        #legendID {
+            border-bottom: solid 0px #ccc;
+            border-right: solid 0px #ccc;
+        }
+
+        #whiterect{
+            border: 2px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://d3js.org/queue.v1.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+
+    <!-- diri is javascript list variable which is getting all the data to be visualised from the server -->
+    <script type="text/javascript">
+        var val = [];
+        var precomputed_positions = [];
+        var all_data = [];
+        var timeline_data = [];
+        var tl_data = [];
+        var autoscroll_position_index = {{ autoscroll_position_index }};
+        var maximum_width = {{ maximum_width }};
+        var maximum_height = {{ maximum_height }};
+        var nameApp = {{ dataset }};
+        var theThread = {{ theThread }};
+        if(theThread == -1)
+            theThread = "All";
+    </script>
+
+    <!-- Gets the Precomputed positions in variable precomputed_position -->
+    {% for item in precomputed_pos %}
+        <script type="text/javascript">
+            precomputed_positions.push({{item | tojson}});
+        </script>
+    {% endfor %}
+
+    <!-- Gets the data in variable all_data in correct order -->
+    {% for item in rectangle_data %}
+        <script type="text/javascript">
+            all_data.push({{item | tojson}});
+        </script>
+    {% endfor %}
+
+    <!-- Gets the timeline data -->
+    {% for item in timeline_data %}
+        <script type="text/javascript">
+            timeline_data.push({{item | tojson}});
+        </script>
+    {% endfor %}
+
+    <div class="ui stackable menu">
+        <div class="item" style="color: teal">
+            <b>
+                <h3>TraceInspector: A Visualization-based Reverse Engineering Tool for Android Apps</h3>
+            </b>
+        </div>
+        <div class="vl"></div>
+        <div class="item" id="NameofApplication" style="font-size: 18px;"></div>
+    </div>
+
+    <script type="text/javascript">
+        if(nameApp == 1)
+        {
+            document.getElementById("NameofApplication").innerHTML = "Application: OVIA PREGNANCY";    
+        }
+        else
+        {
+            document.getElementById("NameofApplication").innerHTML = "Application: CALL BLOCKER";    
+        }
+    </script>
+
+    <div class="row" style="padding-left: 20px; padding-right: 20px;">
+
+    <div class="col-md-1 static" style="padding: 0px; margin: 0px; border: 0px;">
+    <div style="color: teal; padding-bottom: 2px;">
+      <b>&emsp;Select Dataset:</b>
+    </div>
+    <form class="form-inline" method="POST" action="{{ url_for('interactions') }}">
+        <div class="form-group">
+            <div class="input-group" style="margin-left: 25px; ">
+                <select name="dataset" id="dataset" class="selectpicker form-control" style="border-color: teal;">
+                    <option value="Test" style="width: 25px;">CallBlocker</option>
+                    <option value="Actual" style="width: 25px;">Ovia</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-default" style="color: white; background: teal; border-color: teal; margin-left: 10px;">View</button>
+        </div>
+    </div>
+    </form>
+
+    <script>
+        function setSelectedIndex(s, v)
+        {
+            for (var i = 0; i < s.options.length; i++)
+            {
+                if (s.options[i].text == v) {
+                    s.options[i].selected = true;
+                    return;
+                }
+            }
+        }
+        setSelectedIndex(document.getElementById("dataset"), nameApp);
+    </script>
+
+    <!-- <form class="form-inline" method="POST" action="{{ url_for('stacked_diagram') }}"> -->
+    <div class="col-md-1 static" style="padding-left: 0px; margin: 0px; border: 0px; padding-right: 0px;">
+    <div style="color: teal; padding-bottom: 2px;">
+      <b>&emsp;Select thread:</b>
+    </div>
+        <select name="comp_select" id="interestedthread" class="thread form-control" style="border-color: teal;">
+            {% for o in thread %}
+            <option value="{{ o }}" style="width: 25px;">{{ o }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-2 static" style="margin: 0px; border: 0px; padding-left: 0px;">
+    <div style="color: teal; padding-bottom: 2px;">
+      <b>&emsp;Filter Events by Call Name:</b>
+    </div>
+        <div class="form-group">
+            <div class="find_function input-group"><textarea name="functionarea" id="searchedfunction" placeholder="Function" width="25px;" cols="25" style="margin-left: 25px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; outline: none !important; border-color: teal; box-shadow: 0 0 1px teal;"></textarea>
+            <button type="submit" class="thesearchbutton btn btn-default" style="color: white; background: teal; border-color: teal; margin-left: 10px; margin-top: -35px;" onclick="optionspanel()">Search</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-5 static" style="padding: 0px; border: 0px; margin-left: -30px; margin: 0px;">
+        <div style="color: teal; padding-bottom: 2px;">
+        <b>&emsp;Filter Events by Common Privacy/Security-Related Calls</b>
+        </div>
+        <div class="most_frequent_methods">
+            {% for method in top_5 %}
+                <ul style="list-style: none; text-decoration: none; background-color:teal ; color: white; display: inline-block; padding-left: 0px; border: 2px solid teal; border-radius: 2px;" class="ul" id="methods_frequency" name="sendServer">
+                    <li>{{ method }}</li>
+                </ul>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Select the method you want to see the call trace for -->
+    <div class="col-md-2 static" style="border: 0px; margin: 0px; padding: 0px;">
+        <div style="color: teal; padding-bottom: 2px;">
+        <b>&emsp;Full Call Index:</b>
+        </div>
+        <div class="all_methods">
+            <select class="dropdown form-control" id="allthemethods" style="list-style: none; text-decoration: none; background-color:#ffffff ; color: #008080; display: inline-block; padding-left: 0px; border: 2px solid #008080; border-radius: 2px;">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Setting the color of the legend dynamically -->
+    <script>
+        function legendColor(){
+            var spans = document.getElementsByClassName('LegendColors');
+            var cc = [c1, c2];
+            for (var i = 0; i < spans.length; i++) {
+                var span = spans[i];
+                span.style.background = cc[i];
+        }
+        } 
+    </script>
+
+    <!-- Selecting search or thread -->
+    <script type="text/javascript">
+        function optionspanel() {
+            var threadOptionSelected = $("select.thread").find("option:selected").text();
+            var textFunctionSelected = document.getElementById("searchedfunction").value;
+        
+            var sendOptions = [];
+            sendOptions.push(threadOptionSelected);
+            sendOptions.push(textFunctionSelected);
+
+            $.ajax({
+              type : "POST",
+              dataType: 'json',
+              url : "{{ url_for('stacked_diagram') }}",
+              contentType: 'application/json;charset=UTF-8',
+              data : JSON.stringify(sendOptions),
+              success: function(data) {
+                    stacked_log(data[0], data[1], data[2], data[3], data[4], data[5]);
+              }
+            });
+        }
+    </script>
+
+
+    <script type="text/javascript">
+        var m = [];
+        {% for item in all_methods %}
+            m.push({{item | tojson}});
+        {% endfor %}
+
+        let dropdown = document.getElementById('allthemethods');
+        dropdown.length = 0;
+
+        let defaultOption = document.createElement('option');
+        defaultOption.text = 'Select method';
+        defaultOption.value = 'None';
+
+        dropdown.add(defaultOption);
+
+        dropdown.selectedIndex = 0;
+
+        let option;
+        for (let i = 0; i < m.length; i++) {
+          option = document.createElement('option');
+          option.text = m[i];
+          option.value = m[i];
+          dropdown.add(option);
+        }
+    </script>
+
+
+
+    <div class="col-md-1 static resetbutton" style="margin: 0px; border: 0px; padding: 0px;">
+        <div style="color: teal; padding-bottom: 2px;">
+        <b>&emsp;Reset interface:</b>
+        </div>
+        <form class="form-inline" method="POST" action="{{ url_for('interactions') }}">
+        <button type="submit" class="btn btn-default" style="width: 100px; color: white; background: teal; border-color: teal; margin-top: 0px; margin-left: 30px;">Reset</button>
+        </form>
+    </div>
+    </div>
+
+    <div class="ui center aligned basic segment" style="margin: 0px; padding: 0px;">
+      <div class="ui left icon action input" id = "topdiv">
+      </div>
+      <div class="ui horizontal divider" style="margin-top: -5px;">
+        -
+      </div>
+    </div>
+
+    <!-- Left part of the webpage which has the visualisation and flowchart -->
+    <div class="split left">
+        <div id="top">
+            <div id="timelinechart" style="height: 100%; width: 20%; position: relative; float: left">
+            </div>
+            <div id="cy" style="height: 100%; width: 80%; position: relative; float: right;">
+            </div>
+        </div>
+        <div class="bottom">
+            <div id="legend3">
+            </div>
+            <div id="chart">
+            </div>
+        </div>
+    </div>
+
+    <!-- Right part of the webpage which has is the corresponding source code -->
+    <div class="split right" id="sourcecode" name="source_code" style="height: 89%;">
+        <div style="color: teal; font-size: 14px; padding-left:4px;"><b>Click on the Methods in the flowchart interface or the stacked log visualisation interface to see the corresponding decompiled Android source code</b></div>
+        <textarea readonly id="result" name="result" style="display: none;"></textarea>
+    </div>
+
+    <!-- The timeline chart or thread visualisation -->
+    <script>   
+        var timelineContainer = d3.select("#timelinechart")
+                            .append("div")
+                            .attr("id", "container")
+                            .append("svg")
+                            .attr("width", 250)
+                            .attr("height", 555);
+
+        var tool = d3.select("#timelinechart")
+                            .append("div")
+                            .style("position", "fixed")
+                            // .style("z-index", "10")
+                            .style("visibility", "hidden")
+                            .call(d3.behavior.zoom().on("zoom", function () {
+                                container.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+                            }));
+        var nameApp = document.getElementById("dataset").value;
+
+        // Get the paired color scheme
+        var darkColors = ["#a6cee3","#b2df8a","#fb9a99","#fdbf6f","#cab2d6"];
+        var lightColors = ["#1f78b4","#33a02c","#e31a1c","#ff7f00","#6a3d9a"];
+
+        var threadWithColors = [];
+        for(var i = 0; i<timeline_data.length; i++)
+        {
+            var tempColor = [];
+            tempColor.push(timeline_data[i]["ThreadData"]);
+            tempColor.push(darkColors[i%darkColors.length]);
+            tempColor.push(lightColors[i%lightColors.length]);
+            threadWithColors.push(tempColor);
+        }
+        console.log("threadWithColors");
+        console.log(threadWithColors);
+        var width = 25;
+        var rectangle = timelineContainer.selectAll("rect")
+                                        .data(timeline_data)
+                                        .enter()
+                                        .append("rect")
+                                        .attr("x", function(d){ 
+                                            return d["Value"][0][0];})
+                                        .attr("y",  function(d){ return d["Value"][0][1];})
+                                        .attr("width", width)
+                                        .attr("height", function(d) {return d["Value"][2][1] - d["Value"][0][1];})
+                                            // precomputed_positions[precompute_counter][2][1] - precomputed_positions[precompute_counter][0][1])
+                                        .attr("fill", function(d, i) {return threadWithColors[i][1];})
+                                        .attr("data",function(d){  })
+                                        .on("mouseover", function(d) {
+                                            tool.text(d["ThreadData"]);
+                                            tool.style("visibility", "visible");
+                                        })
+                                        .on("mousemove", function(d) {
+                                            return tool.style("top", (d3.event.pageY + 15)+"px").style("left",(d3.event.pageX + 15)+"px");
+                                        })
+                                        .on("mouseout", function(){return tool.style("visibility", "hidden");})
+                                        .on("click", function(d){$.ajax({
+                                            url:"/stacked_diagram",
+                                            type: 'POST',
+                                            data: JSON.stringify(d["ThreadData"]),
+                                            contentType: 'application/json;charset=UTF-8',
+                                            success: function(data_structure) {
+                                                console.log("theThread");
+                                                console.log(data_structure[5]);
+                                                stacked_log(data_structure[0], data_structure[1], data_structure[2], data_structure[3], data_structure[4], data_structure[5]);
+                                                legendColor();
+                                            }
+                                        })});
+    </script>
+    
+    <!-- Actual Drawing -->
+    <script>
+        var c1 = "#1f78b4";
+        var c2 = "#a6cee3";
+        if(theThread == -1)
+        {
+            c1 = "#1f78b4";
+            c2 = "#a6cee3";
+        }
+        stacked_log(precomputed_positions, all_data, maximum_height, maximum_width, autoscroll_position_index, theThread);
+        legendColor();
+        function stacked_log(precomputed_positions, all_data, maximum_height, maximum_width, autoscroll_position_index, theThread)
+        {
+            // Get the theThread index
+            for(var i = 0; i<threadWithColors.length; i++)
+            {
+                var t = threadWithColors[i];
+                if(t[0] == theThread)
+                {
+                    c1 = threadWithColors[i][2];
+                    c2 = threadWithColors[i][1];
+                    break;
+                }
+            }
+
+            var val = [];
+
+            d3.select("#chart").selectAll("*").remove();
+            var tooltip = d3.select("#chart")
+                            .append("div")
+                            .style("position", "fixed")
+                            // .style("z-index", "10")
+                            .style("visibility", "hidden")
+                            .call(d3.behavior.zoom().on("zoom", function () {
+                                container.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+                            }));
+
+            var legendHeight = 110;
+            var legendWidth = 1250; 
+
+            d3.select("#legend3").selectAll("*").remove();
+
+            var svgLegned3 = d3.select("#legend3")
+                                .append("rect")
+                                .append("svg")
+                                .attr("width", legendWidth)
+                                .attr("height", legendHeight)
+                                .attr("id", "legendID");
+
+            var container = d3.select('#chart')//.append('div')
+                               .append("svg")
+                               .attr('id','container')
+                               .attr("width", {{maximum_width}} )
+                               .attr("height", {{maximum_height}} );
+            
+            
+            if(autoscroll_position_index == -1)
+            {
+                var scrollLeft = 0;
+                var scrollTop = 0;
+            }
+            else
+            {
+                var scrollLeft = precomputed_positions[autoscroll_position_index][0][0] - 10;
+                var scrollTop = precomputed_positions[autoscroll_position_index][0][1] - 10;
+            }
+
+            $("#chart").scrollLeft(scrollLeft);
+            $("#chart").scrollTop(scrollTop);
+
+            var precompute_counter = 0;
+            var width = 40;
+
+            while(precompute_counter<precomputed_positions.length)
+            {
+                var temp = [all_data[precompute_counter], precomputed_positions[precompute_counter]];  
+                val.push(temp);
+                precompute_counter += 1;
+            }
+
+            var legendVals = d3.scale.ordinal()
+                                .domain(["Method", "API", "Selected"])
+                                .range([c1, c2, "080808"]);
+
+            var whiterect = svgLegned3.append("rect")
+                    .attr("width", 130)
+                    .attr("height", 90)
+                    .attr("id", "whiterect")
+                    .attr("x", 1090)
+                    .attr("y", 5)
+                    .style("fill", "#c8c8c8")
+                    .style("stroke", "#000000")
+                    .style("stroke-width", 2);
+
+            var legend3 = svgLegned3.selectAll('#legend3')
+                                    .data(legendVals.domain())
+                                    .enter().append('g')
+                                    .attr("class", "legends3")
+                                    .attr("transform", function (d, i) {
+                                    {
+                                        return "translate(1100," + (10 + i * 30) + ")"
+                                    }
+                                });
+            
+            legend3.append('rect')
+                .attr("x", 0)
+                .attr("y", 0)
+                .attr("width", 20)
+                .attr("height", 20)
+                .style("fill", function (d) {
+                    return legendVals(d);
+            });
+
+            legend3.append('text')
+                .attr("x", 25)
+                .attr("y", 17)
+                .text(function(d){
+                    return d;
+                });
+
+
+            var rectangle = container.selectAll("rect")
+                                        .data(val)
+                                        .enter()
+                                        .append("rect")
+                                        .attr("x", function(d){ return d[1][0][0];})
+                                        .attr("y",  function(d){ return d[1][0][1];})
+                                        .attr("width", width)
+                                        .attr("height", function(d) {return d[1][2][1] - d[1][0][1];})
+                                        .attr("fill", function(d) {
+                                            if(d[0].Function == "1")
+                                                return "#808080";
+                                            else if(d[0].Type == "Method")
+                                                return c1;
+                                            else
+                                                return c2;})
+                                        // .attr("stroke-width", function(d) {
+                                        //     console.log("Hello is");
+                                        //     if(d[0].Function == "1")
+                                        //         console.log(d[0].Function);
+                                        //         return 2;
+                                        // })
+                                        // .attr("stroke", function(d) {
+                                        //     console.log("Hello");
+                                        //     if(d[0].Function == "1")
+                                        //         console.log(d[0].Function);
+                                        //         return "080808";
+                                        // })
+                                        .attr("data",function(d){  })
+                                        .on("mouseover", function(d) {
+                                            tooltip.text(d[0].Method);
+                                            tooltip.style("visibility", "visible");
+                                        })
+                                        .on("mousemove", function(d) {
+                                            return tooltip.style("top", (d3.event.pageY+15)+"px").style("left",(d3.event.pageX+15)+"px");
+                                        })
+                                        .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
+                                        .on("click", function(d){$.ajax({
+                                            url:"/source_code",
+                                            type: 'POST',
+                                            data: JSON.stringify(d[0].Method + ',' + d.BB_ID + '!' + nameApp),
+                                            // data: JSON.stringify(d[0].Method + ',' + d[0].BB_ID),
+                                            contentType: 'application/json;charset=UTF-8',
+                                            success: function(data_structure) {
+                                                var i = data_structure.length;
+                                                var temp=[];
+                                                var lines=[];
+                                                var character=[];
+                                                while(data_structure[i] != "Line_nos")
+                                                {
+                                                    temp.push(data_structure[i]);
+                                                    i--;
+                                                }
+                                                var result = data_structure.slice(0,i);
+
+                                                var j=temp.length;
+                                                while(temp[j] != "Character_nos")
+                                                {
+                                                    lines.push(temp[j]);
+                                                    j--;
+                                                }
+
+                                                character = temp.slice(1, j);
+                                                var method_found = character[0];
+                                                character = character.reverse();
+                                                character = character.slice(0, character.length-1);
+
+                                                lines = lines.slice(1, lines.length);
+
+                                                var final_code = "";
+                                                for(var i = 0; i<result.length; i++)
+                                                {
+                                                    final_code += result[i] + "\n";
+                                                }
+
+                                                $('#sourcecode').find('.CodeMirror.cm-s-default').remove();
+                                                document.getElementById("result").value = "";
+                                                document.getElementById("result").value = final_code;
+                                                var readOnlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('result'), {
+                                                    mode: "javascript",
+                                                    theme: "default",
+                                                    lineNumbers: true,
+                                                    readOnly: true,
+                                                    styleSelectedText: true,
+                                                    lineWrapping: true
+                                                });
+                                                for(var i = 0; i<lines.length; i++)
+                                                {
+                                                    readOnlyCodeMirror.markText({line: lines[i]-1, ch: 0},{line: lines[i]-1, ch:(lines[i]-1).length}, {className: "styled-background"});
+                                                }
+                                                readOnlyCodeMirror.scrollIntoView({line: lines[0]-1+42, ch:0});
+                                            }
+                                        })})
+                    }
+    </script>
+
+    <script type="text/javascript">
+               function get_the_stacked_log(data_structure) {
+
+                    console.log("data_structure");
+                    console.log(data_structure);
+                    var val = [];
+                    var precomputed_positions = [];
+                    var all_data = [];
+                    var timeline_data = [];
+                    var tl_data = [];
+                    var autoscroll_position_index = data_structure[4];
+                    var maximum_width = data_structure[3];
+                    var maximum_height = data_structure[2];
+                    var theThread = data_structure[5];
+
+                    for(var i = 0; i<data_structure[0].length; i++)
+                    {
+                        precomputed_positions.push(data_structure[0][i]);
+                    }
+                    for(var i = 0; i<data_structure[1].length; i++)
+                    {
+                        all_data.push(data_structure[1][i]);
+                    }
+                    stacked_log(precomputed_positions, all_data, maximum_height, maximum_width, autoscroll_position_index, theThread);
+               }
+    </script>
+
+    <!-- Selecting the most frequent methods -->
+    <script type="text/javascript">
+        $("ul.ul").click(function() {
+            var selected_method = $(this).children("li").map(function() {
+                return $(this).text();
+            }).get();
+
+            $.ajax({
+              type : "POST",
+              dataType: 'json',
+              url : "{{ url_for('flowchart') }}",
+              contentType: 'application/json;charset=UTF-8',
+              data : JSON.stringify(selected_method[0].split(' ')[0] + '!' + nameApp),
+              success: function(data) {
+                    var elem = [];
+                    var i = 0;
+                    for(i = 0; i < data.length; i++)
+                    {
+                        if(data[i] == "separator")
+                            break;
+                        elem.push(data[i]);
+                    }
+                    data_structure = data.slice(6, data.length);
+                    draw_graph(elem);
+                    get_the_stacked_log(data_structure[0][0]);
+              }
+            });
+        });
+    </script>
+
+    <!-- Selecting the other methods for call trace -->
+    <script type="text/javascript">
+        $("select.dropdown").change(function() {
+            var optionSelected = $(this).find("option:selected");
+            var valueSelected  = optionSelected.val();
+            var textSelected   = optionSelected.text();
+            $.ajax({
+              type : "POST",
+              dataType: 'json',
+              url : "{{ url_for('flowchart') }}",
+              contentType: 'application/json;charset=UTF-8',
+              data : JSON.stringify(textSelected + "!" + nameApp),
+              success: function(data) {
+                    var elem = [];
+                    var i = 0;
+                    for(i = 0; i < data.length; i++)
+                    {
+                        if(data[i] == "separator")
+                            break;
+                        elem.push(data[i]);
+                    }
+                    data_structure = data.slice(6, data.length);
+                    draw_graph(elem);
+                    get_the_stacked_log(data_structure[0][0]);
+              }
+            });
+        });
+    </script>
+
+
+    <script>
+        function draw_graph(elem){
+            var elements = elem;
+            $(function() {
+ 
+              var win = $(window);
+
+              win.resize(function() {
+                resize();
+              });
+
+              function resize() {
+                $("#bottom").height(win.innerHeight() - 130);
+                cy.resize();
+              }
+
+              setTimeout(resize, 0);
+
+            for(var i = 0; i<threadWithColors.length; i++)
+            {
+                var t = threadWithColors[i];
+                if(t[0] == elements[4])
+                {
+                    c1 = threadWithColors[i][2];
+                    c2 = threadWithColors[i][1];
+                    break;
+                }
+            }
+
+              var cy = window.cy = cytoscape({
+                container: document.getElementById('cy'),
+                minZoom: 0.1,
+                maxZoom: 100,
+                wheelSensitivity: 0.1,
+
+                layout: {
+                    name: 'klay',
+                    rankDir: 'TD',
+                    'klay': {'direction': 'DOWN'},
+                },
+
+                style: [
+                        {
+                          selector: 'node',
+                          style: {
+                            'label': "data(name)",
+                            'shape': "rectangle",
+                            'height': "60px",
+                            'width': "100px",
+                            'text-valign': "center",
+                            'text-halign': "center",
+                            'font-size': 8,
+                            // 'background-color': "#F2C7BF"
+                            'background-color': c2
+                          }
+                        },{
+                          selector: '$node > node',
+                          css: {
+                            'padding-top': '10px',
+                            'padding-left': '10px',
+                            'padding-bottom': '10px',
+                            'padding-right': '10px',
+                            'text-valign': 'top',
+                            'text-halign': 'center',
+                            'background-color': '#E6E6E6',
+                          }
+                        },
+                        {
+                          selector: 'edge',
+                          style: {
+                            'label': 'data(weight)',
+                            'width': 3,
+                            'font-size': 8,
+                            'background-color': '#000000',
+                            'text-background-shape': 'rectangle',
+                            'text-background-color': 'white',
+                            'text-background-padding': 10,
+                            'target-arrow-shape': 'triangle',
+                            'line-color': '#878787',
+                            'target-arrow-color': '#878787',
+                            'curve-style': 'bezier'
+                          }
+                        }
+                      ],
+
+                      elements: {
+                            nodes: elements[0]
+                            ,
+                            edges: elements[2]
+                        }
+              });
+
+              cy.zoom({
+                  level: 1.3
+                });
+
+               function get_the_source_code(data_structure){
+                    var i = data_structure.length;
+                    var temp=[];
+                    var lines=[];
+                    var character=[];
+                    while(data_structure[i] != "Line_nos")
+                    {
+                        temp.push(data_structure[i]);
+                        i--;
+                    }
+                    var result = data_structure.slice(0,i);
+
+                    var j=temp.length;
+                    while(temp[j] != "Character_nos")
+                    {
+                        lines.push(temp[j]);
+                        j--;
+                    }
+
+                    character = temp.slice(1, j);
+                    var method_found = character[0];
+                    character = character.reverse();
+                    character = character.slice(0, character.length-1);
+
+                    lines = lines.slice(1, lines.length);
+
+                    var final_code = "";
+                    for(var i = 0; i<result.length; i++)
+                    {
+                        final_code += result[i] + "\n";
+                    }
+
+                    $('#sourcecode').find('.CodeMirror.cm-s-default').remove();
+                    document.getElementById("result").value = "";
+                    document.getElementById("result").value = final_code;
+                    var readOnlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('result'), {
+                        mode: "javascript",
+                        theme: "default",
+                        lineNumbers: true,
+                        readOnly: true,
+                        styleSelectedText: true,
+                        lineWrapping: true
+                    });
+                    for(var i = 0; i<lines.length; i++)
+                    {
+                        readOnlyCodeMirror.markText({line: lines[i]-1, ch:0}, {line: lines[i]-1, ch:(lines[i]-1).length}, {className: "styled-background"});
+                    }
+                    readOnlyCodeMirror.scrollIntoView({line: lines[0]-1 + 42, ch:0});
+               }
+
+               cy.on('click', 'nodes', function(e){
+                    selected_node_information = this.data();
+                    $.ajax({
+                        url:"/select_in_stack",
+                        type: 'POST',
+                        data: JSON.stringify(selected_node_information["link"] + '!' + nameApp),
+                        contentType: 'application/json;charset=UTF-8',
+                        success: function(data_structure) {
+                            get_the_stacked_log(data_structure[0]);
+                            get_the_source_code(data_structure[1])                            
+                        }
+                    })
+                });
+                
+              $("#layout").click(function() {
+                cy.layout({
+                  name: 'klay',
+                });
+              });
+
+            });
+        }
+    </script>
+</body>
+</html>

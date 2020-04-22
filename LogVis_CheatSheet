@@ -1,0 +1,74 @@
+CHEAT SHEET
+
+0. Activating environment
+source mypython/bin/activate
+
+1. Installing PostgreSQL
+brew install postgresql
+
+2. Updating PostgreSQL
+brew upgrade postgresql
+
+3. Restarting PostgreSQL
+brew services restart postgresql
+
+4. Starting PostgreSQL
+psql postgres
+
+5. shows the users of the database
+\du
+lists all the tables in the database
+\list
+
+6. Creating database named "log"
+CREATE DATABASE log;
+
+7. Grant all permissions to user/owner - "snehagathani"
+GRANT ALL PRIVILEGES ON DATABASE log TO snehagathani;
+
+8. Connects to the "log" table
+\connect log
+
+9. Directly go into the table with username
+psql log -U snehagathani
+
+10. Running Flask
+export FLASK_APP=index.py
+export FLASK_ENV=development
+flask run
+
+11. {% ... %}
+Jinja code in flask. Used for all if, for, etc. loops
+
+12. {{ ... }}
+Jinja code in flask. Used to get final value to be displayed in this final scene
+
+13. Structure of the code:
+index.py
+This is the Flask application file that we run. It connects the backend pages, that is in our case the database.py page, that is actually creating the databse, inserting the rows and then used to fetch queries; to the front end html pages.THis front end is rendered using the render_template('html page to render', data to pass to this rendered page to use/display).
+While rendering the page, we have, render_template('abc.html', data = variable) -> this means we can use the variable data only to access the variable contents in abc.html.
+
+database.py
+All the backend; creating database, inserting rows, fetching from the table is all performed via thhis backend or actualluy so called backend file.
+
+abc.html
+Here the actual html code is used to display it. To make use of the data fetched, the Jinja language is used. Also javascript can be used to get functions to perform actions on the fetched data.
+
+Route page name need not be the same as the function name where you call the render_template function.
+
+14. {% for item in data %}
+	<tr>
+	    {% for key, value in item.items() %}
+	    <td>{{value}}</td>
+	    <script type="text/javascript">
+	        dir.push({{value | tojson}});
+	        console.log(dir);
+	    </script>>
+	    {% endfor %}
+	</tr>
+	{% endfor %}
+
+	Used to display fetched data in tabular form onto html screen. Also adding to "dir" which is javascript list variable. Need to convert to JSON, hence "(tojson)"
+
+15. Important D3 understanding
+http://mtaptich.github.io/d3-lessons/d3-maps-live-code-2/

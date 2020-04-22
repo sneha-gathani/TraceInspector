@@ -1,0 +1,49 @@
+{"Nodes": [
+		{
+			"ID": 40,
+			"methodOfInterest": "android.app.Application.onCreate(com.ovuline.pregnancy.application.PregnancyApplication@242826915)",
+			"methodChunkName": "com.ovuline.pregnancy.application.PregnancyApplication.onCreate(com.ovuline.pregnancy.application.PregnancyApplication@242826915)",
+			"handlerName": "",
+			"children": []
+		},
+		{
+			"ID": 34,
+			"methodOfInterest": "android.content.ContentProvider.getContext(com.ovuline.pregnancy.application.PregnancyApplication@242826915)",
+			"methodChunkName": "com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider.onCreate(com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider@134602523)",
+			"handlerName": "com.ovuline.pregnancy.application.PregnancyApplication@242826915",
+			"children": [{"ID": 40}]
+		},
+		{
+			"ID": 30,
+			"methodOfInterest": "android.content.ContentProvider.<init>(com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider@134602523)",
+			"methodChunkName": "com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider.<init>()",
+			"handlerName": "com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider@134602523",
+			"children": [{"ID": 34}]
+		},
+		{
+			"ID": 38,
+			"methodOfInterest": "android.database.sqlite.SQLiteOpenHelper.<init>(com.ovuline.pregnancy.accounts.PregnancyAccountDbHelper@194041489,com.ovuline.pregnancy.application.PregnancyApplication@242826915,"",null,124415509&java.lang.Integer@124415509)",
+			"methodChunkName": "com.ovuline.ovia.accounts.OviaAccountDbHelper.<init>()",
+			"handlerName": "com.ovuline.pregnancy.application.PregnancyApplication@242826915",
+			"children": [{"ID": 40}]
+		}
+	],
+"Edges": [
+        {"Source": 40, "Target": [34, 38], "Handler": "com.ovuline.pregnancy.application.PregnancyApplication@242826915"},
+        {"Source": 34, "Target": [30], "Hander": "com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider@134602523"}
+    ]
+}
+
+  // {data: {id: '40' }},
+  // {data: {id: 'female'}},
+  // {data: { id: 'edge1', source: 'all', target: 'female'}},
+  // {data: {id: 'male'}},
+  //   {data: { id: 'edge2', source: 'all', target: 'male'}},
+
+  // {data: {id: 'female_2016'}},
+  // {data: { id: 'edgef16', source: 'female', target: 'female_2016'}},
+
+  // {data: {id: 'male_2017'}},
+  // {data: { id: 'edgem17', source: 'male', target: 'male_2017'}},
+  // {data: {id: 'male_2018'}},
+  // {data: { id: 'edgem18', source: 'male', target: 'male_2018'}}

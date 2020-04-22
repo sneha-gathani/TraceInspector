@@ -1,0 +1,116 @@
+<html>
+  <head>
+    <meta name="description" content="[Cytoscape]" />
+    <meta charset=utf-8 />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
+    <title>Cytoscape Flowchart</title>
+    <script src="/static/cytoscape.js/documentation/js/cytoscape.min.js"></script>
+     <!-- <script src="https://cdn.rawgit.com/cpettitt/dagre/v0.7.4/dist/dagre.min.js"></script>
+    <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-dagre/1.5.0/cytoscape-dagre.js"></script>-->
+    <!-- <script src="../cytoscape.js/build/cytoscape.js"></script> -->
+    <script src="https://unpkg.com/klayjs@0.4.1/klay.js"></script>
+    <script src="/static/cytoscape.js-klay-master/cytoscape-klay.js"></script>
+
+
+
+
+    <style>
+      body {
+        font-family: helvetica;
+        font-size: 14px;
+      }
+
+      #cy {
+        width: 100%;
+        height: 50%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 999;
+      }
+
+      h1 {
+        opacity: 0.5;
+        font-size: 1em;
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Flowchart</h1>
+        <button onclick=" window.location.href='{{url_for('most_frequent')}}' ">Back</button>
+    </div>
+   
+
+ 	<div id="cy" style="position: relative;"></div>
+    <script type="text/javascript">
+    	var elements = {{ elem|tojson }};
+
+        console.log("Hi, in flowchart");
+        console.log(elements);
+
+    	var cy = window.cy = cytoscape({
+		  container: document.getElementById('cy'),
+
+		  boxSelectionEnabled: false,
+		  autounselectify: true,
+
+		  layout: {
+		    name: 'dagre',
+            rankDir: 'TD',
+            'klay': {'direction': 'DOWN'},
+		  },
+
+		  style: [
+		    {
+		      selector: 'node',
+		      style: {
+		        'label': "data(name)",
+                'shape': "rectangle",
+                'text-wrap': 'anywhere',
+                'text-max-width' : "80px",
+                'direction': "vertical",
+                'height': "60px",
+                'width': "100px",
+                'text-valign': "center",
+                'text-halign': "center",
+                'font-size': 8,
+                'background-color': "#AEE2E3"
+		      }
+		    },
+
+		    {
+		      selector: 'edge',
+		      style: {
+		        'label': 'data(weight)',
+                'width': 3,
+                'font-size': 8,
+                'background-color': '#000000',
+                'text-background-shape': 'rectangle',
+                'text-background-color': 'white',
+                'text-background-padding': 10,
+                'target-arrow-shape': 'triangle',
+                'line-color': '#C8C8C8',
+                'target-arrow-color': '#C8C8C8',
+                'curve-style': 'bezier'
+		      }
+		    }
+		  ],
+
+		  elements: {
+            	nodes: elements[0]
+            	,
+            	edges: elements[2]
+            },
+        });
+        
+       var collection = cy.collection();
+               cy.nodes().on('click', function(e){
+                    var clickedNode = e.target;
+                    collection = collection.union(clickedNode);
+                    console.log(collection);
+                });
+
+
+    </script>
+</html>

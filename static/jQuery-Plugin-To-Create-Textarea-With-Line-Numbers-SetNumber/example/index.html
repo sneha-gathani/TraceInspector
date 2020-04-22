@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery SetNumber Plugin Example</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/autosize.js/1.18.1/jquery.autosize.min.js"></script>
+    <script type="text/javascript" src="../dist/set-number.min.js"></script>
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <style>
+    body { background-color:#fafafa;}
+.set-number textarea, .numbers .line-no {
+  font-family: monospace !important;
+  line-height: normal !important
+}
+
+.set-number {
+  overflow: auto !important;
+  margin: 30px 0 0 9px;
+  width: 100%;
+}
+
+.set-number .lines {
+  margin: 0 3px 0 0;
+  padding: 0 2px 0 0;
+  min-width: 50px;
+  float: left
+}
+
+.set-number .numbers {
+  border-right: 1px solid #e6ebe6;
+  padding: 0;
+  margin: 0;
+}
+
+.set-number .numbers .line-no {
+  padding: 0 .5em 0 0;
+  margin: 0;
+  color: #aaa;
+  text-align: right;
+  white-space: nowrap
+}
+
+textarea {
+  overflow: auto;
+  width: auto;
+  outline: none;
+  border: none;
+  box-shadow: none;
+  transition: none;
+}
+
+textarea:focus {
+  background-color: #fcfcfc;
+  box-shadow: none
+}
+
+.lines .numbers .active {
+  background-color: #E95546;
+  color: #fff;
+}
+</style>
+    <script>
+      var ready = function() {
+        // set-number
+        $("#editor").setNumber({
+          activeLine: 9
+        });
+        // jquery-autosize (optional)
+        $("#editor").autosize({
+          callback: function(textarea) {
+            $(textarea).scroll();
+          }
+        });
+        $("#editor").focus();
+      };
+    $(document).ready(ready);
+    </script>
+    </head>
+    <body><div id="jquery-script-menu">
+<div class="jquery-script-center">
+<ul>
+<li><a href="http://www.jqueryscript.net/form/jQuery-Plugin-To-Create-Textarea-With-Line-Numbers-SetNumber.html">Download This Plugin</a></li>
+<li><a href="http://www.jqueryscript.net/">Back To jQueryScript.Net</a></li>
+</ul>
+<div class="jquery-script-ads"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-2783044520727903";
+/* jQuery_demo */
+google_ad_slot = "2780937993";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+<div class="jquery-script-clear"></div>
+</div>
+</div>
+<h1 style="margin:150px auto 20px auto;">jQuery SetNumber Plugin Example</h1>
+<div class="example">
+      <textarea id="editor" style="height: 300px; width: 500px;" placeholder="This is in combination with Autosize." spellcheck="false"></textarea>
+    </div><script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+Method > 1 com.androidrocker.callblocker.MainActivity.<init>() 1055808
+API > 1 android.app.Activity.<init>(com.androidrocker.callblocker.MainActivity@75235272<activity=true>) 1055808
+API < 1 android.app.Activity.<init>(com.androidrocker.callblocker.MainActivity@75235272<activity=true>) 1055808
+Method > 1 com.androidrocker.callblocker.f.<init>() 1074376
+API > 1 android.content.BroadcastReceiver.<init>(com.androidrocker.callblocker.f@254168966) 1074376
+API < 1 android.content.BroadcastReceiver.<init>(com.androidrocker.callblocker.f@254168966) 1074376
+Method < 1 com.androidrocker.callblocker.f.<init>() 1074376
+Method < 1 com.androidrocker.callblocker.MainActivity.<init>() 1074376
+Method > 1 com.androidrocker.callblocker.MainActivity.onCreate( com.androidrocker.callblocker.MainActivity@75235272<activity=true>,null) 1057136
+API > 1 android.app.Activity.onCreate(com.androidrocker.callblocker.MainActivity@75235272<activity=true>,null) 1057136
+API < 1 android.app.Activity.onCreate() 1057136
+API > 1 java.lang.Class.forName("") 1057146
+API < 1 java.lang.Class.forName() 1057146
+API > 1 android.app.Activity.setContentView(com.androidrocker.callblocker.MainActivity@75235272<activity=true>,65980829&java.lang.Integer@65980829) 1057158
+Method > 1 com.androidrocker.callblocker.StrokeTextView.<init>() 1061788
+API > 1 android.widget.TextView.<init>(com.androidrocker.callblocker.StrokeTextView@165151323,com.androidrocker.callblocker.MainActivity@75235272,android.content.res.XmlBlock$Parser@41274321) 1061788
+API < 1 android.widget.TextView.<init>(com.androidrocker.callblocker.StrokeTextView@165151323) 1061788

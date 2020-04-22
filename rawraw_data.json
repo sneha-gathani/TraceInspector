@@ -1,0 +1,77 @@
+{
+    "Edges": [
+        {
+            "Destination": [
+                3421,
+                2944,
+                30,
+                18
+            ],
+            "Handler": "com.ovuline.pregnancy.application.PregnancyApplication",
+            "Source": 3427
+        },
+        {
+            "Destination": [
+                3132
+            ],
+            "Handler": "com.flurry.sdk.fp",
+            "Source": 3421
+        }
+    ],
+    "Nodes": [
+        {
+            "ID": 1,
+            "functionFound": "com.flurry",
+            "handlerName": "com.ovuline.pregnancy.application.PregnancyApplication",
+            "parent": -1
+        },
+        {
+            "ID": 3427,
+            "functionFound": "sdk.fp.c",
+            "handlerName": "com.ovuline.pregnancy.application.PregnancyApplication",
+            "parent": 1
+        },
+        {
+            "ID": 3421,
+            "functionFound": "sdk.fp.c",
+            "handlerName": "com.ovuline.pregnancy.application.PregnancyApplication",
+            "parent": 1
+        },
+        {
+            "ID": 2,
+            "functionFound": "com.facebook",
+            "handlerName": "com.ovuline.pregnancy.application.PregnancyApplication",
+            "parent": -1
+        },
+        {
+            "ID": 2944,
+            "functionFound": "internal.Utility$1.<init>",
+            "handlerName": "com.ovuline.pregnancy.application.PregnancyApplication",
+            "parent": 2
+        },
+        {
+            "ID": 3,
+            "functionFound": "com.ovuline",
+            "handlerName": "com.ovuline.pregnancy.application.PregnancyApplication",
+            "parent": -1
+        },
+        {
+            "ID": 30,
+            "functionFound": "ovia.application.OviaConfiguration.<init>",
+            "handlerName": "com.ovuline.pregnancy.application.PregnancyApplication",
+            "parent": 3
+        },
+        {
+            "ID": 18,
+            "functionFound": "ovia.accounts.OviaAccountDbHelper.<init>",
+            "handlerName": "com.ovuline.pregnancy.application.PregnancyApplication",
+            "parent": 3
+        },
+        {
+            "ID": 3132,
+            "functionFound": "sdk.fp.<init>",
+            "handlerName": "com.flurry.sdk.fp",
+            "parent": 1
+        }
+    ]
+}

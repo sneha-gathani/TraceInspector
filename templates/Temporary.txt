@@ -1,0 +1,592 @@
+THIS IS THE WORKING CODE FOR ONLY METHODS AND HOVER WORKING
+
+<script>
+
+        //Line number of ith element pushed onto this every iteration
+        var stack = new buckets.Stack();
+        //counts height where block needs to end
+        var all_elements_height = new buckets.Stack();
+        //stores [x_position, y_position]
+        var positions_stack = new buckets.Stack();
+        //stores which column this stack element belongs to
+        var c = new buckets.Stack();
+        //stores the max position of the width
+        var max_x_pos = new buckets.Stack();
+
+        var i = 0, j = 1;
+        var x_position = 10;
+        var y_position = 10;
+        var in_between_space = 5;
+        var width = 30;
+        var height = 25;
+        var column = 0;
+
+        //checks if i and j are same
+        function check_ij(i, j)
+        {
+            if(diri[i].Direction == ">" && diri[j].Direction == "<" && diri[i].Method == diri[j].Method && diri[i].Args == diri[j].Args)
+                return true;
+            else
+                return false;
+        }
+
+        //for all the immediate i open and j close in the beginning
+        while(check_ij(i, j))
+        {
+            var val = { "Thread_ID": diri[i].Thread_ID, "Method": diri[i].Method + '(' + diri[i].Args + ')'};
+            rect_data.push(val);
+            
+            y_position = y_position + height + in_between_space;
+
+            i = i + 2;
+            j = j + 2;
+        }
+
+        //for 1st i and j not same
+        if(!check_ij(i, j))
+        {
+            stack.push(i);
+            c.push(column);
+            positions_stack.push([x_position, y_position]);
+            max_x_pos.push(x_position);
+            all_elements_height.push(0);
+
+            x_position = x_position + width + in_between_space;
+            y_position = y_position + height + in_between_space;
+
+            column = column + 1;
+            i = i + 1;
+            j = j + 1;
+        }
+
+        //until i is last element and j is no element or i is second last element and j is last element
+        while(i < diri.length && j < diri.length)
+        {
+            stack.push(i);
+            c.push(column);
+            positions_stack.push([x_position, y_position]);
+            max_x_pos.push(x_position);
+            all_elements_height.push(0);
+
+            //checking i with the top of the stack
+            //if ith element is same as the top of the element
+            var to_check = stack.toArray();
+            if(check_ij(to_check[1], to_check[0]))
+            {
+                stack.pop();
+                c.pop();
+                positions_stack.pop();
+                max_x_pos.pop();
+                all_elements_height.pop();
+
+                var val = { "Thread_ID": diri[i].Thread_ID, "Method": diri[i].Method + '(' + diri[i].Args + ')'};
+                rect_data.push(val);
+
+
+                if(c.peek() < column)
+                {
+                    column = column - 1;
+                    x_position = x_position - (width + in_between_space);
+                }
+
+                stack.pop();
+                c.pop();
+                positions_stack.pop();
+                max_x_pos.pop();
+                all_elements_height.pop();
+
+                //y_position = y_position + in_between_space;
+
+                i = i + 1;
+                j = j + 1;
+            }
+            //if ith element is not the same as the top of the stack
+            else
+            {
+                //check with jth element
+                //if it is the same as the jth element
+                if(check_ij(i, j))
+                {
+                    var val = { "Thread_ID": diri[i].Thread_ID, "Method": diri[i].Method + '(' + diri[i].Args + ')'};
+                    rect_data.push(val);
+
+                    stack.pop();
+                    c.pop();
+                    positions_stack.pop();
+                    max_x_pos.pop();
+                    all_elements_height.pop();
+
+                    var a = all_elements_height.toArray();
+                    all_elements_height.clear();
+                    var sh;
+                    for(sh = a.length - 1; sh >= 0; sh--)
+                    {
+                        a[sh] = a[sh] + 1;
+                        all_elements_height.push(a[sh]);
+                    }
+
+                    var maxxpos = max_x_pos.toArray();
+                    max_x_pos.clear();
+                    var m;
+                    for(m = maxxpos.length - 1; m >= 0; m--)
+                    {
+                        maxxpos[m] = Math.max(maxxpos[m], x_position);
+                        max_x_pos.push(maxxpos[m]);
+                    }
+
+                    if(c.peek() >= column)
+                    {
+                        column = column - 1;
+                        x_position = x_position - (width + in_between_space);                      
+                    } 
+
+                    y_position = y_position + height + (in_between_space);
+                    i = i + 2;
+                    j = j + 2;
+                }
+                //if it is not same as the jth element
+                else
+                {
+                    var maxxpos = max_x_pos.toArray();
+                    max_x_pos.clear();
+                    var m;
+                    for(m = maxxpos.length - 1; m >= 0; m--)
+                    {
+                        maxxpos[m] = Math.max(maxxpos[m], x_position);
+                        max_x_pos.push(maxxpos[m]);
+                    }
+
+                    var a = all_elements_height.toArray();
+                    all_elements_height.clear();
+                    var sh;
+                    for(sh = a.length - 1; sh >= 1; sh--)
+                    {
+                        a[sh] = a[sh] + 1;
+                        all_elements_height.push(a[sh]);
+                    }
+                    all_elements_height.push(a[0]);
+
+                    var b = all_elements_height.toArray();
+
+                    y_position = y_position + height + in_between_space; 
+                    x_position = x_position + width + in_between_space;
+
+                    column = column + 1;
+                    i = i + 1;
+                    j = j + 1;
+                }
+            }
+        }
+        //Point where i is last element and j is out of that diri array
+        if((i == (diri.length - 1) && j >= diri.length))
+        {
+
+            y_position = y_position + (4 * in_between_space);
+
+            stack.push(i);
+            c.push(column);
+            positions_stack.push([x_position, y_position]);
+            max_x_pos.push(x_position);
+            all_elements_height.push(0);
+
+            //if ith element is not the same as the top of the element
+            if(!check_ij(stack.peek(), i))
+            {
+                if(stack.toArray().length == 1)
+                {
+                    var val = { "Thread_ID": diri[i].Thread_ID, "Method": diri[i].Method + '(' + diri[i].Args + ')'};
+                    rect_data.push(val);
+
+                }
+                //if ith element is the same as top element in the stack
+                else
+                {
+                    var val = { "Thread_ID": diri[i].Thread_ID, "Method": diri[i].Method + '(' + diri[i].Args + ')'};
+                    rect_data.push(val);
+
+                    stack.pop();
+                    c.pop();
+                    positions_stack.pop();
+                    max_x_pos.pop();
+                    all_elements_height.pop();
+                    
+                    stack.pop();
+                    c.pop();
+                    positions_stack.pop();
+                    max_x_pos.pop();
+                    all_elements_height.pop();
+                }
+            }   
+        }
+        while(!stack.isEmpty())
+        {
+            var val = { "Thread_ID": diri[i].Thread_ID, "Method": diri[i].Method + '(' + diri[i].Args + ')'};
+            rect_data.push(val);
+
+            stack.pop();
+            c.pop();
+            positions_stack.pop();
+            max_x_pos.pop();
+            all_elements_height.pop();
+        }
+
+        console.log("hello");
+        console.log(rect_data.length);
+        for(var o = 0; o<rect_data.length; o++)
+        {
+            console.log(rect_data[o]); 
+        }
+
+        console.log("While");
+    </script>
+
+    <script>
+
+        var tooltip = d3.select("body")
+                        .append("div")
+                        .style("position", "absolute")
+                        .style("z-index", "10")
+                        .style("visibility", "hidden")
+                        .text("tooltop");
+
+        //SVG Container Made
+        var svgContainer = d3.select("body").selectAll("rect")
+                                            .data(rect_data)
+                                            .enter()
+                                            .append("svg")
+                                            .attr("width", 10000)
+                                            .attr("height", 8000);
+
+        //Line number of ith element pushed onto this every iteration
+        var stack = new buckets.Stack();
+        //counts height where block needs to end
+        var all_elements_height = new buckets.Stack();
+        //stores [x_position, y_position]
+        var positions_stack = new buckets.Stack();
+        //stores which column this stack element belongs to
+        var c = new buckets.Stack();
+        //stores the max position of the width
+        var max_x_pos = new buckets.Stack();
+
+        var i = 0, j = 1;
+        var x_position = 10;
+        var y_position = 10;
+        var in_between_space = 5;
+        var width = 30;
+        var height = 25;
+        var column = 0;
+
+        //checks if i and j are same
+        function check_ij(i, j)
+        {
+            if(diri[i].Direction == ">" && diri[j].Direction == "<" && diri[i].Method == diri[j].Method && diri[i].Args == diri[j].Args)
+                return true;
+            else
+                return false;
+        }
+
+        //for all the immediate i open and j close in the beginning
+        while(check_ij(i, j))
+        {
+            var val = { "Thread_ID": diri[i].Thread_ID, "Method": diri[i].Method + '(' + diri[i].Args + ')'};
+            rect_data.push(val);
+            var rectangle = svgContainer.selectAll("rect")
+                                        .data(rect_data)
+                                        .enter()
+                                        .append("rect")
+                                        .attr("x", x_position)
+                                        .attr("y", y_position)
+                                        .attr("width", width)
+                                        .attr("height", height)
+                                        .on("mouseover", function(d) {
+                                            tooltip.text("Thread_ID: "+ d.Thread_ID + "\nMethod: "+ d.Method);
+                                            tooltip.style("visibility", "visible");
+                                        })
+                                        .on("mousemove", function() {
+                                            return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+                                        })
+                                        .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+            y_position = y_position + height + in_between_space;
+
+            i = i + 2;
+            j = j + 2;
+        }
+
+        //for 1st i and j not same
+        if(!check_ij(i, j))
+        {
+            stack.push(i);
+            c.push(column);
+            positions_stack.push([x_position, y_position]);
+            max_x_pos.push(x_position);
+            all_elements_height.push(0);
+
+            x_position = x_position + width + in_between_space;
+            y_position = y_position + height + in_between_space;
+
+            column = column + 1;
+            i = i + 1;
+            j = j + 1;
+        }
+
+        //until i is last element and j is no element or i is second last element and j is last element
+        while(i < diri.length && j < diri.length)
+        {
+            stack.push(i);
+            c.push(column);
+            positions_stack.push([x_position, y_position]);
+            max_x_pos.push(x_position);
+            all_elements_height.push(0);
+
+            //checking i with the top of the stack
+            //if ith element is same as the top of the element
+            var to_check = stack.toArray();
+            if(check_ij(to_check[1], to_check[0]))
+            {
+                stack.pop();
+                c.pop();
+                positions_stack.pop();
+                max_x_pos.pop();
+                all_elements_height.pop();
+
+                var val = { "Thread_ID": diri[i].Thread_ID, "Method": diri[i].Method + '(' + diri[i].Args + ')'};
+                rect_data.push(val);
+
+                var rectangle = svgContainer.selectAll("rect")
+                                            .data(rect_data)
+                                            .enter()
+                                            .append("rect")
+                                            .attr("x", positions_stack.peek()[0])
+                                            .attr("y", positions_stack.peek()[1])
+                                            .attr("width", width)
+                                            .attr("height", (height + (all_elements_height.peek() * (height + in_between_space))))
+                                            .on("mouseover", function(d) {
+                                                tooltip.text("Thread_ID: " + d.Thread_ID + "\nMethod: " + d.Method);
+                                                tooltip.style("visibility", "visible");
+                                            })
+                                            .on("mousemove", function() {
+                                                return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+                                            })
+                                            .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+
+                if(c.peek() < column)
+                {
+                    column = column - 1;
+                    x_position = x_position - (width + in_between_space);
+                }
+
+                stack.pop();
+                c.pop();
+                positions_stack.pop();
+                max_x_pos.pop();
+                all_elements_height.pop();
+
+                //y_position = y_position + in_between_space;
+
+                i = i + 1;
+                j = j + 1;
+            }
+            //if ith element is not the same as the top of the stack
+            else
+            {
+                //check with jth element
+                //if it is the same as the jth element
+                if(check_ij(i, j))
+                {
+                    var val = { "Thread_ID": diri[i].Thread_ID, "Method": diri[i].Method + '(' + diri[i].Args + ')'};
+                    rect_data.push(val);
+
+                    var rectangle = svgContainer.selectAll("rect")
+                                                .data(rect_data)
+                                                .enter()
+                                                .append("rect")
+                                                .attr("x", x_position)
+                                                .attr("y", y_position)
+                                                .attr("width", width)
+                                                .attr("height", height)
+                                                .on("mouseover", function(d) {
+                                                    tooltip.text("Thread_ID: " + d.Thread_ID + "\nMethod: " + d.Method);
+                                                    tooltip.style("visibility", "visible");
+                                                })
+                                                .on("mousemove", function() {
+                                                    return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+                                                })
+                                                .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+
+                    stack.pop();
+                    c.pop();
+                    positions_stack.pop();
+                    max_x_pos.pop();
+                    all_elements_height.pop();
+
+                    var a = all_elements_height.toArray();
+                    all_elements_height.clear();
+                    var sh;
+                    for(sh = a.length - 1; sh >= 0; sh--)
+                    {
+                        a[sh] = a[sh] + 1;
+                        all_elements_height.push(a[sh]);
+                    }
+
+                    var maxxpos = max_x_pos.toArray();
+                    max_x_pos.clear();
+                    var m;
+                    for(m = maxxpos.length - 1; m >= 0; m--)
+                    {
+                        maxxpos[m] = Math.max(maxxpos[m], x_position);
+                        max_x_pos.push(maxxpos[m]);
+                    }
+
+                    if(c.peek() >= column)
+                    {
+                        column = column - 1;
+                        x_position = x_position - (width + in_between_space);                      
+                    } 
+
+                    y_position = y_position + height + (in_between_space);
+                    i = i + 2;
+                    j = j + 2;
+                }
+                //if it is not same as the jth element
+                else
+                {
+                    var maxxpos = max_x_pos.toArray();
+                    max_x_pos.clear();
+                    var m;
+                    for(m = maxxpos.length - 1; m >= 0; m--)
+                    {
+                        maxxpos[m] = Math.max(maxxpos[m], x_position);
+                        max_x_pos.push(maxxpos[m]);
+                    }
+
+                    var a = all_elements_height.toArray();
+                    all_elements_height.clear();
+                    var sh;
+                    for(sh = a.length - 1; sh >= 1; sh--)
+                    {
+                        a[sh] = a[sh] + 1;
+                        all_elements_height.push(a[sh]);
+                    }
+                    all_elements_height.push(a[0]);
+
+                    var b = all_elements_height.toArray();
+
+                    y_position = y_position + height + in_between_space; 
+                    x_position = x_position + width + in_between_space;
+
+                    column = column + 1;
+                    i = i + 1;
+                    j = j + 1;
+                }
+            }
+        }
+        //Point where i is last element and j is out of that diri array
+        if((i == (diri.length - 1) && j >= diri.length))
+        {
+
+            y_position = y_position + (4 * in_between_space);
+
+            stack.push(i);
+            c.push(column);
+            positions_stack.push([x_position, y_position]);
+            max_x_pos.push(x_position);
+            all_elements_height.push(0);
+
+            //if ith element is not the same as the top of the element
+            if(!check_ij(stack.peek(), i))
+            {
+                if(stack.toArray().length == 1)
+                {
+                    var val = { "Thread_ID": diri[i].Thread_ID, "Method": diri[i].Method + '(' + diri[i].Args + ')'};
+                    rect_data.push(val);
+
+                    var rectangle = svgContainer.selectAll("rect")
+                                                .data(rect_data)
+                                                .enter()
+                                                .append("rect")
+                                                .attr("x", x_position)
+                                                .attr("y", y_position)
+                                                .attr("width", width)
+                                                .attr("height", height)
+                                                .on("mouseover", function(d) {
+                                                    tooltip.text("Thread_ID: " + d.Thread_ID + "\nMethod: " + d.Method);
+                                                    tooltip.style("visibility", "visible");
+                                                })
+                                                .on("mousemove", function() {
+                                                    return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+                                                })
+                                                .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+                }
+                //if ith element is the same as top element in the stack
+                else
+                {
+                    var val = { "Thread_ID": diri[i].Thread_ID, "Method": diri[i].Method + '(' + diri[i].Args + ')'};
+                    rect_data.push(val);
+
+                    stack.pop();
+                    c.pop();
+                    positions_stack.pop();
+                    max_x_pos.pop();
+                    all_elements_height.pop();
+
+                    var rectangle = svgContainer.selectAll("rect")
+                                                .data(rect_data)
+                                                .enter()
+                                                .append("rect")
+                                                .attr("x", positions_stack.peek()[0])
+                                                .attr("y", positions_stack.peek()[1])
+                                                .attr("width", width)
+                                                .attr("height", (height + (all_elements_height.peek() * (height + (in_between_space)))))
+                                                .on("mouseover", function(d) {
+                                                    tooltip.text("Thread_ID: " + d.Thread_ID + "\nMethod: " + d.Method);
+                                                    tooltip.style("visibility", "visible");
+                                                })
+                                                .on("mousemove", function() {
+                                                    return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+                                                })
+                                                .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+                    
+                    stack.pop();
+                    c.pop();
+                    positions_stack.pop();
+                    max_x_pos.pop();
+                    all_elements_height.pop();
+                }
+            }   
+        }
+        while(!stack.isEmpty())
+        {
+            var val = { "Thread_ID": diri[i].Thread_ID, "Method": diri[i].Method + '(' + diri[i].Args + ')'};
+            rect_data.push(val);
+
+            var rectangle = svgContainer.selectAll("rect")
+                                        .data(rect_data)
+                                        .enter()
+                                        .append("rect")
+                                        .attr("x", positions_stack.peek()[0])
+                                        .attr("y", positions_stack.peek()[1])
+                                        .attr("width", width)
+                                        .attr("height", (height + (all_elements_height.peek() * (height + (in_between_space)))))
+                                        .on("mouseover", function(d) {
+                                            tooltip.text("Thread_ID: ".bold() + d.Thread_ID + "\nMethod: ".bold() + d.Method);
+                                            tooltip.style("visibility", "visible");
+                                        })
+                                        .on("mousemove", function() {
+                                            return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+                                        })
+                                        .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+            stack.pop();
+            c.pop();
+            positions_stack.pop();
+            max_x_pos.pop();
+            all_elements_height.pop();
+        }
+
+        console.log("hello");
+        console.log(rect_data.length);
+        for(var o = 0; o<rect_data.length; o++)
+        {
+            console.log(rect_data[o]); 
+        }
+
+    </script>

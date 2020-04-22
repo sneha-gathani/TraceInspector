@@ -1,0 +1,36 @@
+BBEntry 1 4154080
+Method > 1 com.ovuline.pregnancy.application.PregnancyApplication.<init>()
+Method < 1 com.ovuline.pregnancy.application.PregnancyApplication.<init>()
+BBEntry 1 4150616
+Method > 1 com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider.<clinit>()
+Method < 1 com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider.<clinit>()
+BBEntry 1 4150688
+Method > 1 com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider.<init>()
+Method < 1 com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider.<init>()
+BBEntry 1 4150832
+Method > 1 com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider.onCreate(com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider@134602523)
+BBEntry 1 4150948
+Method > 1 com.ovuline.pregnancy.accounts.PregnancyAccountDbHelper.<init>()
+BBEntry 1 3924824
+Method > 1 com.ovuline.ovia.accounts.OviaAccountDbHelper.<init>()
+Method < 1 com.ovuline.ovia.accounts.OviaAccountDbHelper.<init>()
+Method < 1 com.ovuline.pregnancy.accounts.PregnancyAccountDbHelper.<init>()
+Method < 1 com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider.onCreate()
+BBEntry 1 4154224
+Method > 1 com.ovuline.pregnancy.application.PregnancyApplication.onCreate(com.ovuline.pregnancy.application.PregnancyApplication@242826915)
+BBEntry 1 3927980
+Method > 1 com.ovuline.ovia.application.DataRepository.<init>()
+Method < 1 com.ovuline.ovia.application.DataRepository.<init>()
+BBEntry 1 4151028
+Method > 1 com.ovuline.pregnancy.application.Configuration.<init>()
+BBEntry 1 3930232
+Method > 1 com.ovuline.ovia.application.OviaConfiguration.<init>()
+Method < 1 com.ovuline.ovia.application.OviaConfiguration.<init>()
+Method < 1 com.ovuline.pregnancy.application.Configuration.<init>()
+BBEntry 1 3957744
+Method > 1 com.ovuline.ovia.network.OviaRestService.<clinit>()
+BBEntry 1 4505496
+Method > 1 okhttp3.MediaType.<clinit>()
+Method < 1 okhttp3.MediaType.<clinit>()
+BBEntry 1 4505588
+Method > 1 okhttp3.MediaType.a("")

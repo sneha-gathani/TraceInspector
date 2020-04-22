@@ -1,0 +1,36 @@
+BBEntry 1 4154080
+Method > 1 com.ovuline.pregnancy.application.PregnancyApplication.<init>()
+API > 1 android.app.Application.<init>(com.ovuline.pregnancy.application.PregnancyApplication@242826915)
+API < 1 android.app.Application.<init>(com.ovuline.pregnancy.application.PregnancyApplication@242826915)
+Method < 1 com.ovuline.pregnancy.application.PregnancyApplication.<init>()
+BBEntry 1 4150616
+Method > 1 com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider.<clinit>()
+API > 1 android.net.Uri.parse("")
+API < 1 android.net.Uri.parse(android.net.Uri$StringUri@208328025)
+API > 1 android.content.UriMatcher.<init>(android.content.UriMatcher@72819199,263150540&java.lang.Integer@263150540)
+API < 1 android.content.UriMatcher.<init>(android.content.UriMatcher@72819199)
+API > 1 android.content.UriMatcher.addURI(android.content.UriMatcher@72819199,"","",124415509&java.lang.Integer@124415509)
+API < 1 android.content.UriMatcher.addURI()
+Method < 1 com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider.<clinit>()
+BBEntry 1 4150688
+Method > 1 com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider.<init>()
+API > 1 android.content.ContentProvider.<init>(com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider@134602523)
+API < 1 android.content.ContentProvider.<init>(com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider@134602523)
+Method < 1 com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider.<init>()
+BBEntry 1 4150832
+Method > 1 com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider.onCreate(com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider@134602523)
+API > 1 android.content.ContentProvider.getContext(com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider@134602523)
+API < 1 android.content.ContentProvider.getContext(com.ovuline.pregnancy.application.PregnancyApplication@242826915)
+BBEntry 1 4150948
+Method > 1 com.ovuline.pregnancy.accounts.PregnancyAccountDbHelper.<init>()
+BBEntry 1 3924824
+Method > 1 com.ovuline.ovia.accounts.OviaAccountDbHelper.<init>()
+API > 1 android.database.sqlite.SQLiteOpenHelper.<init>(com.ovuline.pregnancy.accounts.PregnancyAccountDbHelper@194041489,com.ovuline.pregnancy.application.PregnancyApplication@242826915,"",null,124415509&java.lang.Integer@124415509)
+API < 1 android.database.sqlite.SQLiteOpenHelper.<init>(com.ovuline.pregnancy.accounts.PregnancyAccountDbHelper@194041489)
+Method < 1 com.ovuline.ovia.accounts.OviaAccountDbHelper.<init>()
+Method < 1 com.ovuline.pregnancy.accounts.PregnancyAccountDbHelper.<init>()
+Method < 1 com.ovuline.pregnancy.accounts.PregnancyAccountContentProvider.onCreate()
+BBEntry 1 4154224
+Method > 1 com.ovuline.pregnancy.application.PregnancyApplication.onCreate(com.ovuline.pregnancy.application.PregnancyApplication@242826915)
+API > 1 android.app.Application.onCreate(com.ovuline.pregnancy.application.PregnancyApplication@242826915)
+API < 1 android.app.Application.onCreate()

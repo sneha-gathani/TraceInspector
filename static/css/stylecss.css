@@ -1,0 +1,102 @@
+        svg {
+            float: left;
+            border-bottom: solid 1px #ccc;
+            border-right: solid 1px #ccc;
+            margin-right: -1px;
+            margin-bottom: -1px;
+        }
+        rect {
+            stroke: none;
+            opacity: 0.6;
+            color: red;
+            font-size: 20px;
+        }
+
+        .static {
+            position: static;
+        }
+
+        .tooltip {
+            position: fixed;
+            visibility: hidden;
+            font: "Calibri";
+            font-size: 12;
+            font-color: red;
+        }
+        .legend3 rect {
+          fill:white;
+          stroke:black;
+        }
+
+        text.divergence {
+          font-size: 14px;
+          fill: #2F4A6D;
+        }
+        text.value {
+          font-size: 14px;
+        }
+        text.title {
+          font-size: 22px;
+          font-weight: 600;
+        }
+        text.label {
+          font-size: 14px;
+          font-weight: 400;
+        }
+        text.source {
+          font-size: 10px;
+        }
+
+        /*Styling for the code box*/
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background: #ccc;  
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #999;  
+        }
+
+        /*Split Left*/
+        .split {
+            /*height: 80%;*/
+            width: 50%;
+            position: absolute;
+            /*z-index: 1;*/
+            overflow-x: hidden;
+        }
+
+        .left {
+            left: 0;
+            background-color: transparent;
+        }
+
+        .right {
+            right: 0;
+            position: absolute;
+            background-color: transparent;
+        }
+
+        /*Source Code*/
+        .CodeMirror.cm-s-default {
+            height: auto;
+        }
+
+        .CodeMirror {
+          height: auto;
+        }
+
+        /*highlighting the function*/
+        .styled-background {
+            background-color: #ff7;
+        }
